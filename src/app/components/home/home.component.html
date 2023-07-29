@@ -1,0 +1,13 @@
+<section>
+    <h3 class="input-label">Filter by keywords</h3>
+    <form>
+      <mat-icon matSuffix class="search">search</mat-icon>
+      <input type="text" placeholder="Search">
+    </form>
+    <p class="results">Results: {{count}}</p>
+    <div class="container">
+        <ng-container *ngFor="let item of items; let i = index" >
+            <app-article [item]="item" class="thumb"></app-article>
+        </ng-container>
+    </div>
+</section>
