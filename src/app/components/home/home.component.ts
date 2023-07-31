@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy  } from '@angular/core';
-import { Article } from '../../entities/article';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { ArticleComponent } from '../article/article.component';
-import { ArticlesService } from 'src/app/services/articles.service';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { Article } from '../../entities/article';
+import { ArticlesService } from 'src/app/services/articles.service';
+import { ArticleComponent } from '../article/article.component';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,10 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
   public items: Article[] = [];
 
+  public filter: string = '';
+
+  public timerVal: any;
+
   private _destroy$ = new Subject<void>();
 
   
@@ -26,7 +31,8 @@ export class HomeComponent implements OnInit, OnDestroy  {
    * @param {ArticlesService} _articleService
    */
   constructor(
-    private _articleService: ArticlesService
+    private _articleService: ArticlesService,
+    private _router: Router,
   ) { }
 
   /**
@@ -49,14 +55,27 @@ export class HomeComponent implements OnInit, OnDestroy  {
    * Get data
    *
    */
-  private _subscribeData(){
-    this._articleService.getArticles()
+  private _subscribeData(filter?: string){
+    this._articleService.getArticles(filter)
       .pipe(
         takeUntil( this._destroy$ ),
           tap( response => this.count = response.count),
           tap( response => this.items = response['results'] ), 
       )
       .subscribe();
+  }
 
+  /**
+ * Text filter
+ *
+ * @param {string} val
+ */
+  public searchArticle( val: string ) {
+    clearTimeout( this.timerVal );
+    this.timerVal = setTimeout( () => this._subscribeData(val), 1000 );
+  }
+
+  navigateToDestination(id: number) {
+    this._router.navigate([`article/:${id}`]);
   }
 }

@@ -10,12 +10,36 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; 
+import { CutLengthPipe } from './pipes/cut-length.pipe';
+import { RouterModule, Routes } from '@angular/router';
+import { ArticleDetailsComponent } from './components/article-details/article-details.component';
+// import { ArticleDetaisComponent } from './components/article-detais/article-details.component';
+
+
+const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    title: 'Home page'
+  },
+  {
+    path: 'details/:id',
+    component: ArticleDetailsComponent,
+    title: 'Article details'
+  },
+  { path: '**', redirectTo: '/'}
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleComponent,
-    HomeComponent
+    HomeComponent,
+    CutLengthPipe,
+    ArticleDetailsComponent
+    // ArticleDetailsComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -23,6 +47,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatIconModule,
     HttpClientModule,
+    FormsModule,
+    RouterModule.forRoot(routes)
+  ],
+  exports: [
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

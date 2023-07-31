@@ -15,12 +15,10 @@ export class ArticlesService {
    * Constructor
    *
    * @param {HttpClient} _http
-  //  * @param {SnackBarService} _snackBar
    */
- constructor(
-  private _http: HttpClient,
-) {
-}
+  constructor(
+     private _http: HttpClient,
+  ) {}
 
 
   /**
@@ -42,5 +40,26 @@ export class ArticlesService {
         )
       );
   }
+
+  /**
+   * Get article item
+   *
+   * @param {number} id
+   */
+  public getItem( id?: number ): Observable<any> {
+    // let params = new HttpParams();
+    // !!filter ? params = params.append('search', !!filter ? filter : '') : null;
+    // const options = {
+    //   params
+    //  }
+    return this._http.get<Article>( `${API_URL}/v4/articles/${id}`)
+      .pipe(
+        tap( () => {
+          },
+          error => console.error('GET-request error', error) 
+        )
+      );
+  }
+
 
 }

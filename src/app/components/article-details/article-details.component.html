@@ -1,0 +1,13 @@
+<img src="{{item.image_url}}" alt="Article image" class="article-image">
+<div class="article-container">
+    <h3 class="article-title">{{item.title}}</h3>
+    <p *ngIf="!showLong" class="article-content">{{item.summary}}</p>
+    <p *ngIf="showLong" class="article-content">{{longText}}</p>
+</div>
+<a class="article-nav-link" [routerLink]="['/']">
+    <mat-icon class="article-nav-pic">arrow_back</mat-icon>
+    <p class="article-nav-text">Back to homepage</p> 
+</a>
+
+<mat-icon class="show-long-text" (click)="showLong = !showLong">format_line_spacing</mat-icon>
+

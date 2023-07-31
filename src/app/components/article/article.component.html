@@ -1,6 +1,21 @@
 <article class="thumb">
     <img class="image" src="{{item.image_url}}" alt="Article image">
-    <p class="date">{{item.published_at | date }}</p>
-    <h3>{{item.title}}</h3>
-    <p>{{item.summary}}</p>
+    <div class="article-card">
+        <div class="article-date-container">
+            <mat-icon class="article-date-pic">calendar_today</mat-icon>
+            <p class="article-date-text">{{item.published_at | date }}</p>
+        </div>
+        <h3 class="article-title" [innerHTML]="title"></h3>
+        <p class="article-content" >{{item.summary | cutLength}}</p>
+        <a class="article-nav-link" [routerLink]="['/details', item.id]">
+            <p class="article-nav-text">Read more</p>
+            <mat-icon class="article-nav-pic">arrow_forward</mat-icon>
+        </a>
+
+        <!-- <button  (click)="navigateToDestination(item.id)">Read more</button> -->
+    </div>
+  
 </article>
+
+<!-- [innerHTML]="title" -->
+<!-- class="highlight" -->

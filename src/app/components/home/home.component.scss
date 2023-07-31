@@ -1,19 +1,10 @@
+@import 'src/scss/colors';
+@import 'src/scss/reset';
 
-
-// .results {
-//     display: grid;
-//     column-gap: 14px;
-//     row-gap: 14px;
-//     grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
-//     margin-top: 50px;
-//     justify-content: space-around;
-//   }
-  
   form {
     display: flex;
     border: 1px solid rgba(234, 234, 234, 1);
     box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.05);
-    // padding: 10px;
     border-radius: 5px;
     width: 600px;
     height: 40px;
@@ -43,12 +34,12 @@
     line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
-    font-family: 'Montserrat', sans-serif; 
+    // font-family: 'Montserrat', sans-serif; 
   }
 
   .results{
     margin: 40px 0 45px 0;
-    font-family: Montserrat;
+    // font-family: Montserrat;
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -60,7 +51,7 @@
             display: block;
             width: 1290px;
             height: 1px;
-            background-color: rgba(234, 234, 234, 1);
+            background-color: $borderColor;
         }
   }
 
@@ -73,7 +64,8 @@
   .thumb {
     width: 400px;
     height: 530px;
-    border: 1px solid rgba(234, 234, 234, 1);
+    margin-bottom: 45px;
+    border: 1px solid $borderColor;
     box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.05);
     overflow: hidden;
   }
