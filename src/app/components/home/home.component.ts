@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
   public timerVal: any;
 
+  public loading: boolean = true; 
+
   private _destroy$ = new Subject<void>();
 
   
@@ -61,6 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
         takeUntil( this._destroy$ ),
           tap( response => this.count = response.count),
           tap( response => this.items = response['results'] ), 
+          tap(() => this.loading = false)
       )
       .subscribe();
   }
@@ -75,7 +78,11 @@ export class HomeComponent implements OnInit, OnDestroy  {
     this.timerVal = setTimeout( () => this._subscribeData(val), 1000 );
   }
 
-  navigateToDestination(id: number) {
-    this._router.navigate([`article/:${id}`]);
+  /**
+ * Remove spaces
+ *
+ */
+  public removeSpaces() {
+    this.filter = this.filter.trim();
   }
 }

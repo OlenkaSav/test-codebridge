@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Article } from '../../entities/article'
-// import { Router } from '@angular/router';
+import { Article } from '../../entities/article';
 
 @Component({
   selector: 'app-article',
@@ -15,16 +14,14 @@ export class ArticleComponent implements OnInit {
   @Input()
   public searchText: string = '';
 
-  public title: string = '';
+  public title = '';
 
-
+  public content = '';
 
     /**
    * Constructor
    */
-    constructor(
-      // private _router: Router,
-    ) {
+    constructor() {
     }
 
     
@@ -33,41 +30,29 @@ export class ArticleComponent implements OnInit {
    */
   ngOnInit() {
     this.title = this.highlightMatches(this.item.title, 65)
-    // console.log(this.title)
+    this.content = this.highlightMatches(this.item.summary, 100)
+
   }
 
   /**
  * Hiliting text
  */
   public highlightMatches(text: string | undefined, length: number): string {
-    // if (this.searchText) {
-    //   const regex = new RegExp(this.searchText, 'gi');
-    //   this.highlightedText = this.originalText.replace(regex, (match) => `<span class="highlighted">${match}</span>`);
-    // } else {
-    //   this.highlightedText = this.originalText;
-    // }
-  
     if (this.searchText && !!text){
     const regex = new RegExp(this.searchText, "gi");
-    return this._cutLength(text.replace(regex, (match) => `<span style="highlight">${match}</span>`), length);
+    return this._cutLength(text.replace(regex, (match) => `<mark style="highlight">${match}</mark>`), length);
     }
     return !!text ? this._cutLength(text, length) : '';
  }
 
-  /**
- * Cut length of string
- */
- private _cutLength(value: string | undefined, length: number): string {
-  if (!value) return '';
-  if (value.length > length) {
-    return value.substring(0, length) + '...';
+    /**
+   * Cut length of string
+   */
+  private _cutLength(value: string | undefined, length: number): string {
+    if (!value) return '';
+    if (value.length > length) {
+      return value.substring(0, length) + '...';
+    }
+    return value;
   }
-  return value;
-}
-
-// navigateToDestination(id: number | undefined) {
-//   if(!!id)
-//   this._router.navigate(['/details', id]);
-// }
-
 }

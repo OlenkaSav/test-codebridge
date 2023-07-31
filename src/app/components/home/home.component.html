@@ -3,9 +3,12 @@
     <form>
       <mat-icon matSuffix class="search">search</mat-icon>
       <input type="text" placeholder="Search" [(ngModel)]="filter" (keyup)="searchArticle(filter)"
-      [ngModelOptions]="{standalone: true}" >
+      [ngModelOptions]="{standalone: true}" (ngModelChange)="removeSpaces()">
     </form>
     <p class="results">Results: {{count}}</p>
+    <div *ngIf="loading" class="loader">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
     <div class="container">
         <ng-container *ngFor="let item of items; let i = index" >
             <app-article [item]="item" [searchText]="filter" class="thumb"></app-article>
