@@ -5,8 +5,8 @@
             <mat-icon class="article-date-pic">calendar_today</mat-icon>
             <p class="article-date-text">{{item.published_at | date }}</p>
         </div>
-        <h3 class="article-title" [innerHTML]="title"></h3>
-        <p class="article-content" [innerHTML]="content"></p>
+        <h3 class="article-title" [innerHTML]="getSafeHtml(title)"></h3>
+        <p class="article-content" [innerHTML]="getSafeHtml(content)"></p>
         <!-- <p class="article-content" [appHighlight]="searchText" >{{item.summary | cutLength}}</p> -->
         <a class="article-nav-link" [routerLink]="['/details', item.id]">
             <p class="article-nav-text">Read more</p>

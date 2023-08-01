@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Article } from '../entities/article';
 
@@ -47,12 +47,7 @@ export class ArticlesService {
    * @param {number} id
    */
   public getItem( id?: number ): Observable<any> {
-    // let params = new HttpParams();
-    // !!filter ? params = params.append('search', !!filter ? filter : '') : null;
-    // const options = {
-    //   params
-    //  }
-    return this._http.get<Article>( `${API_URL}/v4/articles/${id}`)
+     return this._http.get<Article>( `${API_URL}/v4/articles/${id}`)
       .pipe(
         tap( () => {
           },

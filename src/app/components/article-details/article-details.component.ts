@@ -42,13 +42,16 @@ export class ArticleDetailsComponent implements OnInit {
     this.subscription = _route.params.subscribe(params=>this.id=params['id']);
   }
 
+   /**
+   * OnInit hook
+   */
   ngOnInit() {
     this._getItem(this.id);
     }
 
-  /**
- * OnDestroy hook
- */
+    /**
+   * OnDestroy hook
+   */
   ngOnDestroy() {
     this._destroy$.next();
     this._destroy$.unsubscribe();

@@ -12,9 +12,11 @@
   padding: 0;
   height: 100%;
 }
+
 .article-card {
   padding: 0px 25px;
 }
+
 .article-title {
   margin-bottom: 20px;
   font-family: Montserrat;
@@ -22,16 +24,6 @@
   font-weight: 400;
   line-height: 29px;
   height: 80px;
-
-  // .highlight {
-  //   color: red;
-  //   background-color: yellow !important;
-  // }
-
-    //  span {
-    //   // color: red;
-    //   background-color: yellow;
-    // }
 }
 
 .article-date-container{
@@ -47,10 +39,12 @@
 
   }
 }
+
 .article-date-pic{
   font-size: 16px;
   color: $secondaryTextColor;
 }
+
 .article-date-text {
   font-size: 14px;
   font-weight: 400;
@@ -79,13 +73,3 @@
     margin-left: 6px;
   }
 }
-
-// .highlight {
-//   color: red;
-//   background-color: yellow !important;
-// }
-
-// span {
-//   color: red;
-//   background-color: yellow;
-// }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Article } from '../../entities/article';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-article',
@@ -21,7 +22,9 @@ export class ArticleComponent implements OnInit {
     /**
    * Constructor
    */
-    constructor() {
+    constructor(
+      private sanitizer: DomSanitizer
+    ) {
     }
 
     
@@ -54,5 +57,19 @@ export class ArticleComponent implements OnInit {
       return value.substring(0, length) + '...';
     }
     return value;
+  }
+
+   /**
+   * Sanitaze html
+   */
+  private _sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+     /**
+   * Get sanitaze html
+   */
+  public getSafeHtml(html: string): SafeHtml {
+    return this._sanitizeHtml(html);
   }
 }
