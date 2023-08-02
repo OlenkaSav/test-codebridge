@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Article } from '../../entities/article';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+// import noImage from '../../../assets/no-image-icon-23494.png'
 
 @Component({
   selector: 'app-article',
@@ -19,6 +20,8 @@ export class ArticleComponent implements OnInit {
 
   public content = '';
 
+  // noImageSrc: string = noImage;
+
     /**
    * Constructor
    */
@@ -34,7 +37,6 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
     this.title = this.highlightMatches(this.item.title, 65)
     this.content = this.highlightMatches(this.item.summary, 100)
-
   }
 
   /**

@@ -1,5 +1,6 @@
-<article class="thumb">
-    <img class="image" src="{{item.image_url}}" alt="Article image">
+<article class="thumb" [routerLink]="['/details', item.id]">
+    <img *ngIf="!!item.image_url" class="image" src="{{item.image_url}}" alt="Article image">
+    <img *ngIf="!item.image_url" class="image-plaseholder" src="/assets/no-image.png" alt="Article image">
     <div class="article-card">
         <div class="article-date-container">
             <mat-icon class="article-date-pic">calendar_today</mat-icon>
@@ -8,7 +9,7 @@
         <h3 class="article-title" [innerHTML]="getSafeHtml(title)"></h3>
         <p class="article-content" [innerHTML]="getSafeHtml(content)"></p>
         <!-- <p class="article-content" [appHighlight]="searchText" >{{item.summary | cutLength}}</p> -->
-        <a class="article-nav-link" [routerLink]="['/details', item.id]">
+        <a class="article-nav-link" >
             <p class="article-nav-text">Read more</p>
             <mat-icon class="article-nav-pic">arrow_forward</mat-icon>
         </a>

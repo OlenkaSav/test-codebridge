@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener  } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +26,21 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
   private _destroy$ = new Subject<void>();
 
+  private offset: number = 0;
+
+  public clientHeight: number=0;
+
+  public offsetHeight: number=0;
+
+
+  @HostListener( 'window:scroll', ['$event'] ) onScrollEvent( event: Event ) {
+    this._lazyLoadingGetData();
+  }
+
+  @HostListener( 'window:resize', ['$event'] ) onResize( event: Event ) {
+    this._calculateBodyData();
+  }
+
   
   /**
    * Constructor
@@ -52,37 +67,87 @@ export class HomeComponent implements OnInit, OnDestroy  {
     this._destroy$.unsubscribe();
   }
 
-  
+    /**
+   * Remove spaces
+   *
+   */
+  public removeSpaces() {
+    this.filter = this.filter.trim();
+  }
+
+  /**
+   * Text filter
+   *
+   * @param {string} val
+   */
+  public searchArticle( val: string ) {
+    this.offset = 0;
+    this.items = [];
+    clearTimeout( this.timerVal );
+    this.timerVal = setTimeout( () => this._subscribeData(val), 1000 );
+  }
+    
   /**
    * Get data
    *
    */
   private _subscribeData(filter?: string){
-    this._articleService.getArticles(filter)
+    this._articleService.getArticles( this.offset, filter)
       .pipe(
         takeUntil( this._destroy$ ),
           tap( response => this.count = response.count),
-          tap( response => this.items = response['results'] ), 
+          // tap( response => this.items = this.items.push(response['results']),
+          tap( response => this._itemsSort(response['results'])), 
+          // tap( response => {this.items = response['results'], console.log(this.items) }), 
           tap(() => this.loading = false)
       )
       .subscribe();
   }
 
+
   /**
- * Text filter
- *
- * @param {string} val
+ * LazyLoading data
  */
-  public searchArticle( val: string ) {
-    clearTimeout( this.timerVal );
-    this.timerVal = setTimeout( () => this._subscribeData(val), 1000 );
+  private _lazyLoadingGetData() {
+    this._calculateBodyData();
+    if ( (window.scrollY + this.clientHeight - this.offsetHeight < 1 && window.scrollY + this.clientHeight - this.offsetHeight > -1) ) {
+      this.offset = this.offset + 12;
+      if (this.offset < this.count){
+        this._subscribeData(this.filter);
+      }
+    }
+  }
+  
+
+  /**
+ * Items sort
+ *
+ * @param {Article[] | undefined} val
+ */
+  private _itemsSort( val: Article[] | undefined ) {
+    if (!!val?.length && !this.filter) {
+      this.items = [...this.items, ...val]
+    }
+    else if (!!val?.length && !!this.filter){
+      let titles: Article[] = [];
+      let arrToSort = [...this.items, ...val]
+      this.items = arrToSort.reduce((titlefirst, item) => {
+        if (!!item.title && item.title.includes(this.filter)) {
+          titlefirst.unshift(item);
+        } else {titlefirst.push(item)}
+        return titlefirst;
+      }, titles)
+    }
   }
 
   /**
- * Remove spaces
+ * Calculate height for scroll
  *
+ * @private
  */
-  public removeSpaces() {
-    this.filter = this.filter.trim();
+  private _calculateBodyData() {
+    this.clientHeight = window.innerHeight || document.documentElement.clientHeight;
+    this.offsetHeight = document.body.scrollHeight;
   }
+  
 }

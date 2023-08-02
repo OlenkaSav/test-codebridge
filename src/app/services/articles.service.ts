@@ -26,11 +26,13 @@ export class ArticlesService {
    *
    * @param {string} filter
    */
-  public getArticles( filter?: string ): Observable<any> {
+  public getArticles(offset: number , filter?: string, ): Observable<any> {
     let params = new HttpParams();
     !!filter ? params = params.append('search', !!filter ? filter : '') : null;
+    params = params.append('offset', offset);
+    params = params.append('limit', 12);
     const options = {
-      params
+      params,
      }
     return this._http.get<Article[]>( `${API_URL}/v4/articles`, options)
       .pipe(

@@ -3,13 +3,22 @@
 .image{
     width: 100%;
     height: 217px;
+    min-height: 217px;
     object-fit: cover;
+}
+
+.image-plaseholder{
+  width: 100%;
+  height: 217px;
+  min-height: 217px;
+  object-fit: contain;
 }
 
 .thumb{
   position: relative;
   padding: 0;
   height: 100%;
+  cursor: pointer;
 }
 
 .article-card {
